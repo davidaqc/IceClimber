@@ -1,0 +1,11 @@
+Configuracion Slick2D y LWJGL en Eclipse:
+	-> Click derecho en el proyecto
+	-> Build Path -> Add Libraries... -> User Library -> User Libraries... 
+	-> New... -> Add External JARSs... -> slick.jar
+	-> New... -> Add External JARSs... -> lwjgl.jar -> Native library location -> native/windows
+
+PD: Verificar en:
+	-> Click derecho en el proyecto
+	-> Properties -> Java Build Path -> Libraries
+	-> Classpath -> (que se encuentre las dos liberias creadas)
+	
