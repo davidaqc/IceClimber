@@ -1,4 +1,3 @@
-
 package juego; 
 
 import java.net.*;
@@ -16,8 +15,8 @@ public class cliente {
         String hostname = "localhost";
         int port = 8888;
  
-        try (Socket socket = new Socket(hostname, port)) {
- 
+       try (Socket socket = new Socket(hostname, port)) {
+        while(true) {
             InputStream input = socket.getInputStream();
  
             OutputStream output = socket.getOutputStream();
@@ -27,16 +26,16 @@ public class cliente {
  
             String line = reader.readLine();
             System.out.println(line);
- 
-            writer.println("helo " + hostname);
+            
+            writer.println("hello " + hostname);
  
             line = reader.readLine();
             System.out.println(line);
  
-            writer.println("quit");
+            writer.println("jugador|vida");
             line = reader.readLine();
             System.out.println(line);
- 
+        	}
         } catch (UnknownHostException ex) {
  
             System.out.println("Server not found: " + ex.getMessage());
@@ -45,5 +44,6 @@ public class cliente {
  
             System.out.println("I/O error: " + ex.getMessage());
         }
+    
     }
 }
