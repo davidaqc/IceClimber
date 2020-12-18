@@ -6,14 +6,6 @@ import org.newdawn.slick.SlickException;
 public class Sprite extends Image {
     protected Punto posicion;
 
-    public Sprite(String ruta) throws SlickException {
-        this(ruta, new Punto(0.0f, 0.0f));
-    }
-
-    public Sprite(String ruta, float x, float y) throws SlickException {
-        this(ruta, new Punto(x, y));
-    }
-
     public Sprite(String ruta, Punto posicion) throws SlickException {
         super(ruta);
         this.posicion = posicion;

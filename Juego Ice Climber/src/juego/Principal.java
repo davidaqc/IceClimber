@@ -22,6 +22,7 @@ public class Principal extends StateBasedGame {
 	 */
     public void initStatesList(GameContainer container) throws SlickException {
     	addState(new Menu());
+    	addState(new Juego());
     }
     
 	public static void main(String[] args) {
@@ -29,7 +30,7 @@ public class Principal extends StateBasedGame {
 		
         try {
             AppGameContainer app = new AppGameContainer(new Principal());
-            app.setDisplayMode(640, 480, false);
+            app.setDisplayMode(520, 480, false);
             app.setShowFPS(false);
             app.start();
         } catch (SlickException slick) {
