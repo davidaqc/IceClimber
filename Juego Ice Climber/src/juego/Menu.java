@@ -33,6 +33,7 @@ public class Menu extends BasicGameState {
         this.puntero = new Sprite("res/imagenes/mazo.png", JUGADOR1);
         this.indicador = 0;
     }
+    
 
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
     	this.logo.draw(60, 30);

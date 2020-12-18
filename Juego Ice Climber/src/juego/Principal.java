@@ -25,8 +25,12 @@ public class Principal extends StateBasedGame {
     	addState(new Juego());
     }
     
+    
+    
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub	
+		cliente.conectar();
+		
 		
         try {
             AppGameContainer app = new AppGameContainer(new Principal());
@@ -36,7 +40,8 @@ public class Principal extends StateBasedGame {
         } catch (SlickException slick) {
             slick.printStackTrace();
         }
-
+        
+        
 	}
 
 }
