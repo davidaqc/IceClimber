@@ -4,26 +4,79 @@
 */
 #include<stdio.h>
 #include<winsock2.h>
-
+#include "variables.h"
 #pragma comment(lib, "ws2_32.lib") //Winsock Library
+
+void actualizar_puntos(int num){
+    player1[250].puntos += num;
+	printf("%i\n", player1[250].puntos);
+
+}
+void actualizar_Vida(int num){
+    player1[250].vida += num;
+	printf("%i\n", player1[250].vida);
+
+}
 
 char *readMessage(char *messageRead){
 
-	char *prueba = "prueba1";
-	char *jugador = "casa";
-	char *error = "error\r\n";
-	int valor = strcmp(messageRead, jugador);
+
+	if(strcmp(obtiene_naranja, messageRead) == 0){
+		actualizar_puntos(naranjas);
+		respuesta = "actualizacionDePuntuacion\r\n";
+		printf("sumaNaranjas\n");
+		return respuesta;
+	}
+	else  if(strcmp(obtiene_banana, messageRead) == 0){
+		actualizar_puntos(bananos);
+		respuesta = "actualizacionDePuntuacion\r\n";
+		printf("sumaBananos\n");
+		return respuesta;
+	}
+	else  if(strcmp(obtiene_berenjena, messageRead) == 0){
+        actualizar_puntos(berenjenas);
+		respuesta = "actualizacionDePuntuacion\r\n";
+		printf("sumaBerenjena\n");
+		return respuesta;
+    }
+    else  if(strcmp(obtiene_lechuga, messageRead) == 0){
+        actualizar_puntos(lechugas);
+        respuesta = "actualizacionDePuntuacion\r\n";
+		printf("sumaBlechuga\n");
+		return respuesta;
+    }
+    else  if(strcmp(detruye_hielo, messageRead) == 0){
+        actualizar_puntos(hielo);
+        respuesta = "actualizacionDePuntuacion\r\n";
+		printf("sumaHielos\n");
+		return respuesta;
+    }
+    else  if(strcmp(detruye_ave, messageRead) == 0){
+        actualizar_puntos(ave);
+        respuesta = "actualizacionDePuntuacion\r\n";
+		printf("sumaAve\n");
+		return respuesta;
+    }
+    else  if(strcmp(detruye_yeti, messageRead) == 0){
+        actualizar_puntos(yeti);
+        respuesta = "actualizacionDePuntuacion\r\n";
+		printf("sumaYeti\n");
+		return respuesta;
+    }
+	else  if(strcmp(sumarVida, messageRead) == 0){
+        actualizar_Vida(1);
+        respuesta = "actualizacionDeVida\r\n";
+		printf("sumaVida\n");
+		return respuesta;
+    }
+	else  if(strcmp(restarVida, messageRead) == 0){
+        actualizar_Vida(-1);
+        respuesta = "actualizacionDeVida\r\n";
+		printf("restaVida\n");
+		return respuesta;
+    }
 	
-	if(strcmp(prueba, messageRead) == 0){
-		prueba = "pruebaCorrecta1\r\n";
-		printf("pruebaCorrecta1\n");
-		return prueba;
-	}
-	else  if(strcmp(jugador, messageRead) == 0){
-		jugador = "pruebaCorrecta2\r\n";
-		printf("pruebaCorrecta2\n");
-		return jugador;
-	}
+
 	else{
 		printf("pruebaIncorrecta\n");
 		
@@ -34,10 +87,12 @@ char *readMessage(char *messageRead){
 
 int main(int argc , char *argv[])
 {
+	player1[250].vida = 3;
+	player1[250].puntos = 0;
 	WSADATA wsa;
 	SOCKET master , new_socket , client_socket[30] , s;
 	struct sockaddr_in server, address;
-	int max_clients = 30 , activity, addrlen, i, valread;
+	int max_clients = 3 , activity, addrlen, i, valread;
 	char *message = "mensaje|prueba \r\n";
 	
 	//size of our receive buffer, this is string length.

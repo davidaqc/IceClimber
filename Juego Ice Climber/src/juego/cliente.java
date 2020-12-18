@@ -27,11 +27,14 @@ public class cliente {
             String line = reader.readLine();
             System.out.println(line);
             
-            writer.println("casa\0");
+            writer.println("sumaVida\0");
  
             line = reader.readLine();
             System.out.println(line);
- 
+            writer.println("restaVida\0");
+            
+            line = reader.readLine();
+            System.out.println(line);
 
         	}
         } catch (UnknownHostException ex) {

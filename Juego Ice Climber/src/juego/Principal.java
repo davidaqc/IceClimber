@@ -22,7 +22,7 @@ public class Principal extends StateBasedGame {
 	 */
     public void initStatesList(GameContainer container) throws SlickException {
     	addState(new Menu());
-    	addState(new Juego());
+    	//addState(new Juego());
     }
     
     
