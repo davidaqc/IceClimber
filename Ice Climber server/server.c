@@ -7,6 +7,31 @@
 
 #pragma comment(lib, "ws2_32.lib") //Winsock Library
 
+char *readMessage(char *messageRead){
+
+	char *prueba = "prueba1";
+	char *jugador = "casa";
+	char *error = "error\r\n";
+	int valor = strcmp(messageRead, jugador);
+	
+	if(strcmp(prueba, messageRead) == 0){
+		prueba = "pruebaCorrecta1\r\n";
+		printf("pruebaCorrecta1\n");
+		return prueba;
+	}
+	else  if(strcmp(jugador, messageRead) == 0){
+		jugador = "pruebaCorrecta2\r\n";
+		printf("pruebaCorrecta2\n");
+		return jugador;
+	}
+	else{
+		printf("pruebaIncorrecta\n");
+		
+		return error;
+	}
+
+}
+
 int main(int argc , char *argv[])
 {
 	WSADATA wsa;
@@ -173,10 +198,12 @@ int main(int argc , char *argv[])
                 else
                 {
 					//add null character, if you want to use with printf/puts or other string handling functions
-					buffer[valread] = '\0';
-					printf("%s:%d - %s \n" , inet_ntoa(address.sin_addr) , ntohs(address.sin_port), buffer);
-
-					send( s , buffer , valread , 0 );
+					//buffer[valread] = '\0';
+					
+					//printf("%s:%d - %s \n" , inet_ntoa(address.sin_addr) , ntohs(address.sin_port), buffer);
+					char *mensajePrueba = readMessage(buffer);
+					printf(mensajePrueba);
+					send( s , mensajePrueba , strlen(mensajePrueba) , 0 );
 
                 }
             }
