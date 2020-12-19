@@ -70,6 +70,7 @@ public class Juego extends BasicGameState {
 					this.jugador.jumping = false;
 					this.jugador.jumping_2 = true;
 					this.bloques.get(i).eliminarBloque();
+					cliente.enviarMensaje("hielo\0");
 					this.jugador.sobre_piso = false;
 				}
 			

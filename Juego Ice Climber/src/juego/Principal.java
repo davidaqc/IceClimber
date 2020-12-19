@@ -21,7 +21,7 @@ public class Principal extends StateBasedGame {
 	 * Inicializar la lista de estados del juego
 	 */
     public void initStatesList(GameContainer container) throws SlickException {
-    	//addState(new Menu());
+    	addState(new Menu());
     	addState(new Juego());
     }
     
@@ -29,17 +29,12 @@ public class Principal extends StateBasedGame {
     
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub	
-		cliente.conectar();
-		
-		
-        try {
-            AppGameContainer app = new AppGameContainer(new Principal());
-            app.setDisplayMode(520, 480, false);
-            app.setShowFPS(false);
-            app.start();
-        } catch (SlickException slick) {
-            slick.printStackTrace();
-        }
+				
+        Thread hilo_cliente = new ProcesoCliente("proceso cliente");
+        Thread hilo_server = new ProcesoServer("proceso server");
+        
+        hilo_cliente.start();
+        hilo_server.start();
         
         
 	}
