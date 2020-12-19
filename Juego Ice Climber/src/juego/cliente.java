@@ -9,33 +9,25 @@ import java.io.*;
  * @author www.codejava.net
  */
 public class cliente {
- 
+	static String hostname = "localhost";
+	static int port = 8888;
+	static String line;
+	static String mensaje;
+	static PrintWriter writer;
+	static InputStream input;
+	static OutputStream output;
+	static BufferedReader reader;
     public static void conectar() {
  
-        String hostname = "localhost";
-        int port = 8888;
- 
+    	
        try (Socket socket = new Socket(hostname, port)) {
         while(true) {
-            InputStream input = socket.getInputStream();
- 
-            OutputStream output = socket.getOutputStream();
-            PrintWriter writer = new PrintWriter(output, true);
- 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(input));
- 
-            String line = reader.readLine();
-            System.out.println(line);
+        	input= socket.getInputStream();
+        	output = socket.getOutputStream();
+            writer = new PrintWriter(output, true);
+            reader= new BufferedReader(new InputStreamReader(input));
+            leerMensaje();
             
-            writer.println("sumaVida\0");
- 
-            line = reader.readLine();
-            System.out.println(line);
-            writer.println("restaVida\0");
-            
-            line = reader.readLine();
-            System.out.println(line);
-
         	}
         } catch (UnknownHostException ex) {
  
@@ -47,4 +39,14 @@ public class cliente {
         }
     
     }
+     static void leerMensaje() throws IOException {
+    	line = reader.readLine();
+    	System.out.println(line);
+    	
+    }
+     static void enviarMensaje(String cambio) {
+    	 mensaje = cambio;
+    	 writer.println(mensaje);
+    	 
+     }
 }
