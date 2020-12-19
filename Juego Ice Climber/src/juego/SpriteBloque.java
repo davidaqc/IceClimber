@@ -1,25 +1,21 @@
 package juego;
 
-import org.newdawn.slick.Animation;
-import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 
-public class SpriteJugador extends Animation {
+public class SpriteBloque extends Image {
 	
     private float posicion_x;
     private float posicion_y;
 
-    public SpriteJugador(SpriteSheet frames, int duration) {
-		super(frames, duration);
-		posicion_x = 450;
-		posicion_y = 412;
-	}
+    public SpriteBloque(String ruta, float x, float y) throws SlickException {
+        super(ruta);
+		posicion_x = x;
+		posicion_y = y;
+    }
 
     public void draw() {
         super.draw(this.posicion_x, this.posicion_y);
-    }
-    
-    public void draw_() {
-    	super.getCurrentFrame().getFlippedCopy(true, false).draw(this.posicion_x, this.posicion_y);
     }
     
 	public float getPosicion_x() {

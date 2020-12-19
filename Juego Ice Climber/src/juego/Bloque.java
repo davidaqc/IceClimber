@@ -6,11 +6,11 @@ import org.newdawn.slick.geom.Shape;
 
 public class Bloque {
 
-	private SpriteJugador bloque;
+	private SpriteBloque bloque;
 	private Rectangle colision;
 
     public Bloque(String ruta, float x, float y) throws SlickException {
-        this.bloque = new SpriteJugador(ruta, x, y);
+        this.bloque = new SpriteBloque(ruta, x, y);
         this.colision = new Rectangle(this.bloque.getPosicion_x(), this.bloque.getPosicion_y(), (float) this.bloque.getWidth(), (float) this.bloque.getHeight());
     }
     

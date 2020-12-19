@@ -1,11 +1,14 @@
 package juego;
 
 import java.util.ArrayList;
+
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -15,11 +18,10 @@ public class Juego extends BasicGameState {
 	ArrayList<Bloque> bloques;
 	private Jugador jugador;
 	private Input entrada;
-	
 	private Image fondo;
+
 	
     public void init(GameContainer container, StateBasedGame game) throws SlickException {
-    	
         this.fondo = new Image("res/imagenes/mapa_nivel_1.png");
 		this.jugador = new Jugador("res/imagenes/popo.png", 450, 412);
 		this.bloques = new ArrayList<Bloque>();		
@@ -28,9 +30,7 @@ public class Juego extends BasicGameState {
     }
 
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-        //this.fondo.draw(0.0f, (float) container.getHeight() - this.fondo.getHeight(),  (float) container.getWidth(), this.fondo.getHeight());
     	this.fondo.draw(0.0f, (float) container.getHeight() - this.fondo.getHeight());
-		
     	this.jugador.draw();
 		
 		for (int i=0; i<this.bloques.size(); i++) {
@@ -56,8 +56,8 @@ public class Juego extends BasicGameState {
 				if(jugador_colisiona_el_lado_izquiero_del_objeto >= -2 && this.jugador.jumping || jugador_colisiona_el_lado_izquiero_del_objeto >= -2 && this.jugador.sobre_piso == false) {
 					this.jugador.setX(this.jugador.getIzquierdo() + 1.5f);
 				}
-				else if(jugador_colisiona_el_lado_derecho_del_objeto >= -46 && jugador_colisiona_el_lado_derecho_del_objeto <= -40 && this.jugador.jumping
-						|| jugador_colisiona_el_lado_derecho_del_objeto >= -46 && jugador_colisiona_el_lado_derecho_del_objeto <= -40 && this.jugador.sobre_piso == false) {
+				else if(jugador_colisiona_el_lado_derecho_del_objeto >= -50 && jugador_colisiona_el_lado_derecho_del_objeto <= -40 && this.jugador.jumping
+						|| jugador_colisiona_el_lado_derecho_del_objeto >= -50 && jugador_colisiona_el_lado_derecho_del_objeto <= -40 && this.jugador.sobre_piso == false) {
 					this.jugador.setX(this.jugador.getIzquierdo() - 1.5f);
 				}
 				else if(jugador_colisiona_el_lado_superior_del_objeto <= 1) {
@@ -76,7 +76,7 @@ public class Juego extends BasicGameState {
 			}else {
 				if(i == this.bloques.size() - 1 && !(this.jugador.sobre_piso == true && control_bloques == true) && this.jugador.jumping_2 ) {
 					this.jugador.sobre_piso = false;
-					this.jugador.setNivel_piso(455);	
+					this.jugador.setNivel_piso(412);	
 				}
 			}
 		}

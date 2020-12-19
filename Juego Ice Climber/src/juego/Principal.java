@@ -21,8 +21,8 @@ public class Principal extends StateBasedGame {
 	 * Inicializar la lista de estados del juego
 	 */
     public void initStatesList(GameContainer container) throws SlickException {
-    	addState(new Menu());
-    	//addState(new Juego());
+    	//addState(new Menu());
+    	addState(new Juego());
     }
     
     
