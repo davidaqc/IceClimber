@@ -35,11 +35,6 @@ public class Bloque {
         this.colision.setY(this.bloque.getPosicion_y());
     }
     
-    public void eliminarBloque() {
-    	this.bloque.setPosicion_x(1000);
-    	this.bloque.setPosicion_y(-1000);
-    }
-    
     public float getIzquierdo() {
     	return this.bloque.getPosicion_x();
     }

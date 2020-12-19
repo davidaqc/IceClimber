@@ -17,6 +17,7 @@ public class Juego extends BasicGameState {
 	
 	ArrayList<Bloque> bloques;
 	private Jugador jugador;
+	private Ave ave;
 	private Input entrada;
 	private Image fondo;
 
@@ -24,7 +25,9 @@ public class Juego extends BasicGameState {
     public void init(GameContainer container, StateBasedGame game) throws SlickException {
         this.fondo = new Image("res/imagenes/mapa_nivel_1.png");
 		this.jugador = new Jugador("res/imagenes/popo.png", 450, 412);
-		this.bloques = new ArrayList<Bloque>();		
+		this.ave = new Ave("res/imagenes/popo.png", 0, 412);
+		this.bloques = new ArrayList<Bloque>();	
+		
 		this.nivel1();
 		this.entrada = container.getInput();
     }
@@ -32,6 +35,9 @@ public class Juego extends BasicGameState {
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
     	this.fondo.draw(0.0f, (float) container.getHeight() - this.fondo.getHeight());
     	this.jugador.draw();
+    	
+    	
+    	this.ave.draw();
 		
 		for (int i=0; i<this.bloques.size(); i++) {
 			this.bloques.get(i).draw();
@@ -42,6 +48,12 @@ public class Juego extends BasicGameState {
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		
 		this.jugador.update(delta, this.entrada);
+		this.ave.update(delta, this.entrada);
+		
+		if (this.jugador.getColision().intersects(this.ave.getAreaColision())) {
+			System.out.println("Colisiono");
+			cliente.enviarMensaje("restaVida\0");
+		}
 
 		boolean control_bloques = false;
 		for (int i=0; i<this.bloques.size(); i++){
@@ -68,8 +80,8 @@ public class Juego extends BasicGameState {
 				}
 				else if(jugador_colisiona_el_lado_inferior_del_objeto >= 58 && jugador_colisiona_el_lado_inferior_del_objeto <= 60) {
 					this.jugador.jumping = false;
-					this.jugador.jumping_2 = true;
-					this.bloques.get(i).eliminarBloque();
+					this.jugador.jumping_2 = true;					
+					this.bloques.remove(this.bloques.get(i));
 					cliente.enviarMensaje("hielo\0");
 					this.jugador.sobre_piso = false;
 				}
