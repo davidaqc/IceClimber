@@ -27,6 +27,7 @@ static char *detruye_yeti = "yeti";             /*si la entrada es igual a detru
 static char *sumarVida = "sumaVida";    /*si la entrada es igual a sumaVida la vida se incrementa en 1*/
 static char *restarVida = "restaVida";  /*si la entrada es igual a restaVida la vida se disminuye en 1*/
 static char *error = "error\r\n";       /*si la entrada es igual a error\r\n se maneja el error*/
+static char entradaConsola[30];
 /**
 se define una estrutura y se crea un tipo de variable jugador 
 */

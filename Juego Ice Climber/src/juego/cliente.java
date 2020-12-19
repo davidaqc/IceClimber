@@ -40,11 +40,13 @@ public class cliente {
     
     }
      public static void leerMensaje() throws IOException {
+    	
     	line = reader.readLine();
     	System.out.println(line);
     	
     }
      public static void enviarMensaje(String cambio) {
+    	 
     	 mensaje = cambio;
     	 writer.println(mensaje);
     	 

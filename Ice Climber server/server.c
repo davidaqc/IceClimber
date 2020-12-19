@@ -37,6 +37,11 @@ void actualizar_Vida(int num){
     player1[250].vida += num;			//suma/resta la vida
 	printf("%i\n", player1[250].vida);	//imprime en consola para llevar orden
 }
+
+void leerEntrada(){
+	
+	
+}
 /*
 readMessage
 lee el mensaje que envia el cliente e interpreta la accion que debe tomar
@@ -117,8 +122,7 @@ int main(int argc , char *argv[])
 	siempre se inician estructuras para dos jugadores
 	depende de la cantidad que entres es que se usas estras estructuras
 	*/
-	player1[250].vida = 3;
-	player1[250].puntos = 0;
+	
 	WSADATA wsa;											//abre el socket
 	SOCKET master , new_socket , client_socket[3] , s;		//socket creado y cantidad de clientes
 	struct sockaddr_in server, address;						//es la direccion de trabajo
@@ -179,6 +183,7 @@ int main(int argc , char *argv[])
         for (  i = 0 ; i < max_clients ; i++)					//si no se ha llegado al maximo de cliantes
         {
             s = client_socket[i];								//lo agrega
+											
             if(s > 0)
             {
                 FD_SET( s , &readfds);							//o no hace nada
@@ -219,6 +224,9 @@ int main(int argc , char *argv[])
                 {
                     client_socket[i] = new_socket;
                     printf("Cliente conectado %d \n" , i);
+					player1[250].vida = 3;
+					player1[250].puntos = 0;
+					fgets(entradaConsola, 30, stdin);
                     break;
                 }
             }
@@ -267,12 +275,14 @@ int main(int argc , char *argv[])
 					//el char es la respuesta al cliente
 					//dadd por la funcion readMessage
 					//segun la solicitud del cliente
+					
 					char *mensajePrueba = readMessage(buffer);
-					
 					printf(mensajePrueba);										//imrime el mensaje
-					
 					send( s , mensajePrueba , strlen(mensajePrueba) , 0 );		//envia el mensaje al cliente
-
+					//
+					
+					
+					
                 }
             }
         }
