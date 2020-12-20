@@ -39,12 +39,20 @@ public class cliente {
         }
     
     }
+    /**
+     * Lee los mensajes recibidos del servidor
+     * @throws IOException
+     */
      public static void leerMensaje() throws IOException {
     	
     	line = reader.readLine();
     	System.out.println(line);
     	
     }
+     /**
+      * Envia mensajes hacia el servidor
+      * @param cambio
+      */
      public static void enviarMensaje(String cambio) {
     	 
     	 mensaje = cambio;

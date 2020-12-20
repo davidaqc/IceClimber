@@ -26,7 +26,10 @@ public class Principal extends StateBasedGame {
     }
     
     
-    
+    /** main 
+     * Crea los hilos del cliente y del servidor, para correr el juego y la recepcion y envio de mensajes hacia el servidor en paralelo
+     * @param args
+     */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub	
 				

@@ -25,6 +25,9 @@ public class Menu extends BasicGameState {
     	JUGADOR3 = new Punto(70.0f, 290.0f);
     }
 
+    /** init
+     * Crea los objetos de los botones del menu 
+     */
     public void init(GameContainer container, StateBasedGame game) throws SlickException {
     	this.logo = new Image("res/imagenes/logo.png");
         this.botonJugador1 = new Sprite("res/imagenes/player1.png", new Punto(120.0f, 200.0f));
@@ -34,7 +37,9 @@ public class Menu extends BasicGameState {
         this.indicador = 0;
     }
     
-
+    /** render
+     * Dibuja los objetos del menu en pantalla
+     */
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
     	this.logo.draw(60, 30);
         this.botonJugador1.draw();
@@ -43,6 +48,9 @@ public class Menu extends BasicGameState {
         this.puntero.draw();
     }
 
+    /**update
+     * Función que actualiza el estado de ciertos componentes del menu, como el movimiento del puntero de seleccion de jugador 
+     */
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
         Input entrada = container.getInput();
         if (entrada.isKeyPressed(Input.KEY_UP)) {
@@ -76,7 +84,9 @@ public class Menu extends BasicGameState {
         	game.enterState(1);
         } 
     }
-
+    /** getID
+     * consigue el ID del gamestate
+     */
     public int getID() {
         return 0;
     }
