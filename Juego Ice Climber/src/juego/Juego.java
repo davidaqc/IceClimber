@@ -1,5 +1,6 @@
 package juego;
 
+
 import java.util.ArrayList;
 
 import org.newdawn.slick.Animation;
@@ -15,9 +16,6 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class Juego extends BasicGameState {
 	
-	/**
-	 * Creacion de las variables para los objetos del juego
-	 */
 	ArrayList<Bloque> bloques;
 	private Jugador jugador;
 	private Ave ave;
@@ -25,18 +23,10 @@ public class Juego extends BasicGameState {
 	private Input entrada;
 	private Image fondo;
 	
-	
-	/**
-	 * Elementos que necesita la funcion para mover el mapa cuando los personajes suben
-	 */
 	boolean subio_nivel = false;
 	boolean done = false;
 	int altura = 0;
 	
-	
-    /**Init:
-	 * Inicializa los objetos, tomando las imagenes y sus posiciones iniciales
-     */
     public void init(GameContainer container, StateBasedGame game) throws SlickException {
         this.fondo = new Image("res/imagenes/mapa_nivel_1.png");
 		this.jugador = new Jugador("res/imagenes/popo.png", 450, 412);
@@ -46,15 +36,21 @@ public class Juego extends BasicGameState {
     }
     
     public void crearObjeto() throws SlickException {
+    	
+    	String s = cliente.line;
+    	String separador = " ";
+    	String[] words = s.split(separador);
+
+    	System.out.println(words[0]);
 
     	String ave_ = "ave";
     	String hielo_ = "hielo";
-    	if(cliente.line.equals(ave_)) {
+    	if(words[0].equals(ave_)) {
     		cliente.line = "";
-    		this.ave = new Ave("res/imagenes/popo.png", 0, 412);
-    	}else if(cliente.line.equals(hielo_)) {
+    		this.ave = new Ave("res/imagenes/popo.png", 0, Integer.parseInt(words[1]));
+    	}else if(words[0].equals(hielo_)) {
     		cliente.line = "";
-    		this.hielo = new Hielo("res/imagenes/popo.png", 0, 412);
+    		this.hielo = new Hielo("res/imagenes/popo.png", Integer.parseInt(words[1]), Integer.parseInt(words[2]));
     	}
     		
     }
@@ -81,24 +77,23 @@ public class Juego extends BasicGameState {
     		for (int i = 0; i < redimensionar_bloques; i++) {
     			Bloque bloque1 = new Bloque(this.bloques.get(i).getRuta_(), this.bloques.get(i).getIzquierdo(), this.bloques.get(i).getArriba() + 93);
     			this.bloques.add(bloque1);
-    		}    		
+    		}
+    		
     		for (int i = 0; i < redimensionar_bloques; i++) {
     			this.bloques.remove(0);
     		}
+    		
+    		
     		this.jugador.setNivel_piso(500);
     		this.jugador.setY(this.jugador.getArriba() + 93);
     	}
-	
-    	
+		
 		for (int i=0; i<this.bloques.size(); i++) {
 			this.bloques.get(i).draw();
 		}	
 		
     }
 
-    /** Update:
-     * 	Funci�n que actualiza el estado de ciertos componentes del juego, como el movimiento del jugador y de los enemigos, las colisiones entre ellos, etc. 
-     */
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		this.jugador.update(delta, this.entrada);
 		
@@ -160,17 +155,10 @@ public class Juego extends BasicGameState {
 		}
     }
 
-    /**getID:
-     * retorna el ID del gamestate
-     */
     public int getID() {
         return 1;
     }
     
-    /**nivel1: 
-     * Funci�n que crea todas las filas de bloques del nivel, y las introduce en una lista para su f�cil manejo 
-     * @throws SlickException
-     */
 	public void nivel1() throws SlickException {
 		
 		// Piso 1
