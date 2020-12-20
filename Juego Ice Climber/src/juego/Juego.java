@@ -18,6 +18,7 @@ public class Juego extends BasicGameState {
 	ArrayList<Bloque> bloques;
 	private Jugador jugador;
 	private Ave ave;
+	private Hielo hielo;
 	private Input entrada;
 	private Image fondo;
 	
@@ -29,17 +30,20 @@ public class Juego extends BasicGameState {
         this.fondo = new Image("res/imagenes/mapa_nivel_1.png");
 		this.jugador = new Jugador("res/imagenes/popo.png", 450, 412);
 		this.bloques = new ArrayList<Bloque>();	
-		
 		this.nivel1();
 		this.entrada = container.getInput();
     }
     
-    public void crearAve() throws SlickException {
+    public void crearObjeto() throws SlickException {
 
     	String ave_ = "ave";
+    	String hielo_ = "hielo";
     	if(cliente.line.equals(ave_)) {
     		cliente.line = "";
     		this.ave = new Ave("res/imagenes/popo.png", 0, 412);
+    	}else if(cliente.line.equals(hielo_)) {
+    		cliente.line = "";
+    		this.hielo = new Hielo("res/imagenes/popo.png", 0, 412);
     	}
     		
     }
@@ -47,12 +51,15 @@ public class Juego extends BasicGameState {
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
     	this.fondo.draw(0.0f, (float) container.getHeight() - this.fondo.getHeight() + altura);
     	this.jugador.draw();
-    	crearAve();
+    	crearObjeto();
     	
     	if(this.ave != null) {
         	this.ave.draw();
     	}
 
+    	if(this.hielo != null) {
+    		this.hielo.draw();
+    	}
     	
     	if(this.jugador.getArriba() == 176){
     		subio_nivel = true;
@@ -81,7 +88,6 @@ public class Juego extends BasicGameState {
     }
 
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		
 		this.jugador.update(delta, this.entrada);
 		
     	if(this.ave != null) {
@@ -93,6 +99,9 @@ public class Juego extends BasicGameState {
     		}
     	}
 
+    	if(this.hielo != null) {
+        	this.hielo.update(delta, this.entrada);
+    	}
 
 		if(subio_nivel == true && this.jugador.sobre_piso == false && this.jugador.getArriba() == 412) {
 			System.out.println("Game Over");
