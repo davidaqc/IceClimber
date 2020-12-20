@@ -20,7 +20,10 @@ public class Juego extends BasicGameState {
 	private Ave ave;
 	private Input entrada;
 	private Image fondo;
-
+	
+	boolean subio_nivel = false;
+	boolean done = false;
+	int altura = 0;
 	
     public void init(GameContainer container, StateBasedGame game) throws SlickException {
         this.fondo = new Image("res/imagenes/mapa_nivel_1.png");
@@ -33,11 +36,31 @@ public class Juego extends BasicGameState {
     }
 
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-    	this.fondo.draw(0.0f, (float) container.getHeight() - this.fondo.getHeight());
+    	this.fondo.draw(0.0f, (float) container.getHeight() - this.fondo.getHeight() + altura);
     	this.jugador.draw();
     	
     	
     	this.ave.draw();
+    	
+    	if(this.jugador.getArriba() == 176){
+    		subio_nivel = true;
+    		System.out.println("sas");
+    		done = true;
+    		altura += 93;
+    		int redimensionar_bloques = this.bloques.size();
+    		for (int i = 0; i < redimensionar_bloques; i++) {
+    			Bloque bloque1 = new Bloque(this.bloques.get(i).getRuta_(), this.bloques.get(i).getIzquierdo(), this.bloques.get(i).getArriba() + 93);
+    			this.bloques.add(bloque1);
+    		}
+    		
+    		for (int i = 0; i < redimensionar_bloques; i++) {
+    			this.bloques.remove(0);
+    		}
+    		
+    		
+    		this.jugador.setNivel_piso(500);
+    		this.jugador.setY(this.jugador.getArriba() + 93);
+    	}
 		
 		for (int i=0; i<this.bloques.size(); i++) {
 			this.bloques.get(i).draw();
@@ -51,8 +74,13 @@ public class Juego extends BasicGameState {
 		this.ave.update(delta, this.entrada);
 		
 		if (this.jugador.getColision().intersects(this.ave.getAreaColision())) {
-			System.out.println("Colisiono");
+			//System.out.println("Colisiono");
 			cliente.enviarMensaje("restaVida\0");
+		}
+
+		if(subio_nivel == true && this.jugador.sobre_piso == false && this.jugador.getArriba() == 412) {
+			System.out.println("Game Over");
+			//cliente.enviarMensaje("restaVida\0");
 		}
 
 		boolean control_bloques = false;
@@ -102,7 +130,7 @@ public class Juego extends BasicGameState {
 	public void nivel1() throws SlickException {
 		
 		// Piso 1
-		int suma = -20;
+		int suma = 0;
 		for (int i=0; i<28; i++) {
 			suma = i * 20;
 			Bloque bloque1 = new Bloque("res/imagenes/green_block.png", suma, 455);
@@ -110,7 +138,7 @@ public class Juego extends BasicGameState {
 		}
 		
 		// Piso 2
-		suma = -20;
+		suma = 0;
 		for (int i=0; i<28; i++) {
 			suma = i * 20;
 			Bloque bloque1 = new Bloque("res/imagenes/green_block.png", suma, 362);
@@ -118,7 +146,7 @@ public class Juego extends BasicGameState {
 		}
 
 		// Piso 3
-		suma = -20;
+		suma = 0;
 		for (int i=0; i<28; i++) {
 			suma = i * 20;
 			Bloque bloque1 = new Bloque("res/imagenes/brown_block.png", suma, 269);
@@ -126,18 +154,42 @@ public class Juego extends BasicGameState {
 		}
 		
 		// Piso 4
-		suma = -20;
+		suma = 0;
 		for (int i=0; i<28; i++) {
 			suma = i * 20;
 			Bloque bloque1 = new Bloque("res/imagenes/brown_block.png", suma, 176);
 			this.bloques.add(bloque1);
 		}
 		
-		// Piso 4
-		suma = -20;
+		// Piso 5
+		suma = 0;
 		for (int i=0; i<28; i++) {
 			suma = i * 20;
 			Bloque bloque1 = new Bloque("res/imagenes/brown_block.png", suma, 83);
+			this.bloques.add(bloque1);
+		}
+		
+		// Piso 6
+		suma = 0;
+		for (int i=0; i<28; i++) {
+			suma = i * 20;
+			Bloque bloque1 = new Bloque("res/imagenes/blue_block.png", suma, -10);
+			this.bloques.add(bloque1);
+		}
+		
+		// Piso 7
+		suma = 0;
+		for (int i=0; i<28; i++) {
+			suma = i * 20;
+			Bloque bloque1 = new Bloque("res/imagenes/blue_block.png", suma, -103);
+			this.bloques.add(bloque1);
+		}
+		
+		// Piso 8
+		suma = 0;
+		for (int i=0; i<28; i++) {
+			suma = i * 20;
+			Bloque bloque1 = new Bloque("res/imagenes/blue_block.png", suma, -196);
 			this.bloques.add(bloque1);
 		}
 	}
