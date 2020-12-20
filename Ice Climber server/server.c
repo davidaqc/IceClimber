@@ -13,6 +13,17 @@ se incluyenlibrerias
 #include<winsock2.h>
 #include "variables.h"				//se incluye el .h que tiene las variables globales
 #pragma comment(lib, "ws2_32.lib") 	//Winsock Library
+static WSADATA wsa;												//abre el socket
+static SOCKET master , new_socket , client_socket[3] , s;		//socket creado y cantidad de clientes
+static struct sockaddr_in server, address;						//es la direccion de trabajo
+static int max_clients = 3 , activity, addrlen, i, valread;	/*masimo de clientes, el estdo de conexion,
+																posicion en la que va a quedar y el mensaje, respectivamente*/
+
+static int MAXRECV = 1024;										//tamanio del buffer, lo que se recibe
+static fd_set readfds;											//descritores del socket		
+static char *message = "mensaje|prueba \r\n";					//respuesta para coneccion
+static char *buffer;											//mensaje del cliente
+static char *mensajePrueba;								
 /*
 actualizar_puntos
 se encarga de actualizar los puntos
@@ -38,10 +49,10 @@ void actualizar_Vida(int num){
 	printf("%i\n", player1[250].vida);	//imprime en consola para llevar orden
 }
 
-void leerEntrada(){
+/*void leerEntrada(){
 	
 	
-}
+}*/
 /*
 readMessage
 lee el mensaje que envia el cliente e interpreta la accion que debe tomar
@@ -111,28 +122,43 @@ char *readMessage(char *messageRead){
 		return error;//muestra el error
 	}
 }
+DWORD WINAPI mythread(LPVOID lpParameter)
+{
+	
+				
+	while(TRUE){
+		
+		fgets(entradaConsola, 30, stdin);
+		for (i = 0; i < max_clients; i++) {
+            s = client_socket[i];			
+            if (FD_ISSET( s , &readfds)) 										//leer el mensaje del cliante
+            {
+					send( s , entradaConsola , strlen(entradaConsola) , 0 );
+				}
+			}
+		}
+	
+}
 /*
 metodo main que arranca el servidor
 */
 int main(int argc , char *argv[])
 {
-	/*
-	se define a los jugadores de forma inicial
+
+	
+	buffer =  (char*) malloc((MAXRECV + 1) * sizeof(char));	//para leer el mensaje
+	HANDLE myhandle;
+	DWORD mythreadid;
+	myhandle = CreateThread(0, 0, mythread, 0, 0, &mythreadid);
+	
+	/*se define a los jugadores de forma inicial
 	con una vida de 3 y 0 puntos
 	siempre se inician estructuras para dos jugadores
 	depende de la cantidad que entres es que se usas estras estructuras
 	*/
 	
-	WSADATA wsa;											//abre el socket
-	SOCKET master , new_socket , client_socket[3] , s;		//socket creado y cantidad de clientes
-	struct sockaddr_in server, address;						//es la direccion de trabajo
-	int max_clients = 3 , activity, addrlen, i, valread;	/*masimo de clientes, el estdo de conexion,
-	posicion en la que va a quedar y el mensaje, respectivamente*/
-	char *message = "mensaje|prueba \r\n";					//respuesta para coneccion
-	int MAXRECV = 1024;										//tamanio del buffer, lo que se recibe
-    fd_set readfds;											//descritores del socket
-	char *buffer;											//mensaje del cliente
-	buffer =  (char*) malloc((MAXRECV + 1) * sizeof(char));	//para leer el mensaje
+	
+	
 	/*
 	ciclo para agregar a un arreglo los clientes conectados
 	*/
@@ -226,7 +252,6 @@ int main(int argc , char *argv[])
                     printf("Cliente conectado %d \n" , i);
 					player1[250].vida = 3;
 					player1[250].puntos = 0;
-					fgets(entradaConsola, 30, stdin);
                     break;
                 }
             }
@@ -275,8 +300,7 @@ int main(int argc , char *argv[])
 					//el char es la respuesta al cliente
 					//dadd por la funcion readMessage
 					//segun la solicitud del cliente
-					
-					char *mensajePrueba = readMessage(buffer);
+					mensajePrueba = readMessage(buffer);
 					printf(mensajePrueba);										//imrime el mensaje
 					send( s , mensajePrueba , strlen(mensajePrueba) , 0 );		//envia el mensaje al cliente
 					//
