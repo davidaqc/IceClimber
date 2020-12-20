@@ -28,19 +28,31 @@ public class Juego extends BasicGameState {
     public void init(GameContainer container, StateBasedGame game) throws SlickException {
         this.fondo = new Image("res/imagenes/mapa_nivel_1.png");
 		this.jugador = new Jugador("res/imagenes/popo.png", 450, 412);
-		this.ave = new Ave("res/imagenes/popo.png", 0, 412);
 		this.bloques = new ArrayList<Bloque>();	
 		
 		this.nivel1();
 		this.entrada = container.getInput();
     }
+    
+    public void crearAve() throws SlickException {
+
+    	String ave_ = "ave";
+    	if(cliente.line.equals(ave_)) {
+    		cliente.line = "";
+    		this.ave = new Ave("res/imagenes/popo.png", 0, 412);
+    	}
+    		
+    }
 
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
     	this.fondo.draw(0.0f, (float) container.getHeight() - this.fondo.getHeight() + altura);
     	this.jugador.draw();
+    	crearAve();
     	
-    	
-    	this.ave.draw();
+    	if(this.ave != null) {
+        	this.ave.draw();
+    	}
+
     	
     	if(this.jugador.getArriba() == 176){
     		subio_nivel = true;
@@ -71,12 +83,16 @@ public class Juego extends BasicGameState {
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		
 		this.jugador.update(delta, this.entrada);
-		this.ave.update(delta, this.entrada);
 		
-		if (this.jugador.getColision().intersects(this.ave.getAreaColision())) {
-			//System.out.println("Colisiono");
-			cliente.enviarMensaje("restaVida\0");
-		}
+    	if(this.ave != null) {
+    		this.ave.update(delta, this.entrada);
+    		
+    		if (this.jugador.getColision().intersects(this.ave.getAreaColision())) {
+    			//System.out.println("Colisiono");
+    			cliente.enviarMensaje("restaVida\0");
+    		}
+    	}
+
 
 		if(subio_nivel == true && this.jugador.sobre_piso == false && this.jugador.getArriba() == 412) {
 			System.out.println("Game Over");
