@@ -21,6 +21,7 @@ public class Juego extends BasicGameState {
 	ArrayList<Bloque> bloques;
 	private Jugador jugador;
 	private Ave ave;
+	private Hielo hielo;
 	private Input entrada;
 	private Image fondo;
 	
@@ -39,26 +40,38 @@ public class Juego extends BasicGameState {
     public void init(GameContainer container, StateBasedGame game) throws SlickException {
         this.fondo = new Image("res/imagenes/mapa_nivel_1.png");
 		this.jugador = new Jugador("res/imagenes/popo.png", 450, 412);
-		this.ave = new Ave("res/imagenes/popo.png", 0, 412);
 		this.bloques = new ArrayList<Bloque>();	
-		
 		this.nivel1();
 		this.entrada = container.getInput();
     }
+    
+    public void crearObjeto() throws SlickException {
 
+    	String ave_ = "ave";
+    	String hielo_ = "hielo";
+    	if(cliente.line.equals(ave_)) {
+    		cliente.line = "";
+    		this.ave = new Ave("res/imagenes/popo.png", 0, 412);
+    	}else if(cliente.line.equals(hielo_)) {
+    		cliente.line = "";
+    		this.hielo = new Hielo("res/imagenes/popo.png", 0, 412);
+    	}
+    		
+    }
 
-    /**Render:
-     * Función que es encargada de dibujar en pantallas la posición de los elementos del juego}
-     */
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
     	this.fondo.draw(0.0f, (float) container.getHeight() - this.fondo.getHeight() + altura);
-    	this.jugador.draw(); 	
-    	this.ave.draw();
+    	this.jugador.draw();
+    	crearObjeto();
     	
+    	if(this.ave != null) {
+        	this.ave.draw();
+    	}
+
+    	if(this.hielo != null) {
+    		this.hielo.draw();
+    	}
     	
-    	/**
-    	 * Verifica la altura del jugador para desplazar el nivel hacia arriba 
-    	 */
     	if(this.jugador.getArriba() == 176){
     		subio_nivel = true;
     		System.out.println("sas");
@@ -84,17 +97,23 @@ public class Juego extends BasicGameState {
     }
 
     /** Update:
-     * 	Función que actualiza el estado de ciertos componentes del juego, como el movimiento del jugador y de los enemigos, las colisiones entre ellos, etc. 
+     * 	Funciï¿½n que actualiza el estado de ciertos componentes del juego, como el movimiento del jugador y de los enemigos, las colisiones entre ellos, etc. 
      */
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		
 		this.jugador.update(delta, this.entrada);
-		this.ave.update(delta, this.entrada);
 		
-		if (this.jugador.getColision().intersects(this.ave.getAreaColision())) {
-			//System.out.println("Colisiono");
-			cliente.enviarMensaje("restaVida\0");
-		}
+    	if(this.ave != null) {
+    		this.ave.update(delta, this.entrada);
+    		
+    		if (this.jugador.getColision().intersects(this.ave.getAreaColision())) {
+    			//System.out.println("Colisiono");
+    			cliente.enviarMensaje("restaVida\0");
+    		}
+    	}
+
+    	if(this.hielo != null) {
+        	this.hielo.update(delta, this.entrada);
+    	}
 
 		if(subio_nivel == true && this.jugador.sobre_piso == false && this.jugador.getArriba() == 412) {
 			System.out.println("Game Over");
@@ -149,7 +168,7 @@ public class Juego extends BasicGameState {
     }
     
     /**nivel1: 
-     * Función que crea todas las filas de bloques del nivel, y las introduce en una lista para su fácil manejo 
+     * Funciï¿½n que crea todas las filas de bloques del nivel, y las introduce en una lista para su fï¿½cil manejo 
      * @throws SlickException
      */
 	public void nivel1() throws SlickException {

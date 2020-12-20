@@ -3,11 +3,7 @@ package juego;
 import java.net.*;
 import java.io.*;
  
-/**
- * This program demonstrates a socket client program that talks to a SMTP server.
- *
- * @author www.codejava.net
- */
+
 public class cliente {
 	static String hostname = "localhost";
 	static int port = 8888;
